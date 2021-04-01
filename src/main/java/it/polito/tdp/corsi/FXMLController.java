@@ -5,7 +5,10 @@
 package it.polito.tdp.corsi;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+
+import it.polito.tdp.corsi.model.Corso;
 import it.polito.tdp.corsi.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -46,11 +49,56 @@ public class FXMLController {
 
     @FXML
     void corsiPerPeriodo(ActionEvent event) {
+    	txtRisultato.clear();
     	
+    	if(txtPeriodo.getText().isBlank()) {
+    		txtRisultato.setText("devi inserire un numero ");
+    		return;
+    	}
+    	
+    	int periodo;
+    	try {
+    		periodo = Integer.parseInt(txtPeriodo.getText());
+    	}catch(NumberFormatException ne) {
+    		//ne.printStackTrace();
+    		txtRisultato.setText("devi inserire un numero ");
+    		return;
+    	}
+    	
+    	if(periodo<1 ||periodo>2 ) {
+    		txtRisultato.setText("devi inserire un numero tra 1 e 2");
+    	}
+    	
+    	List<Corso> listaCorsi = model.getCorsiPerPd(periodo);
+    	
+    	for(Corso c: listaCorsi)
+    	txtRisultato.appendText(c.toString()+"\n");
     }
 
     @FXML
     void numeroStudenti(ActionEvent event) {
+       txtRisultato.clear();
+    	
+    	if(txtPeriodo.getText().isBlank()) {
+    		txtRisultato.setText("devi inserire un numero ");
+    		return;
+    	}
+    	
+    	int periodo;
+    	try {
+    		periodo = Integer.parseInt(txtPeriodo.getText());
+    	}catch(NumberFormatException ne) {
+    		//ne.printStackTrace();
+    		txtRisultato.setText("devi inserire un numero ");
+    		return;
+    	}
+    	
+    	if(periodo<1 ||periodo>2 ) {
+    		txtRisultato.setText("devi inserire un numero tra 1 e 2");
+    		return;
+    	}
+    	String result = String.valueOf(model.NumIscrittiPerPD(periodo));
+    	txtRisultato.setText("il numero di iscritti per il periodo didatico numero "+ periodo+" è "+result);
     	
     }
 
